@@ -1,6 +1,13 @@
 <?php
 
 	session_start();
+
+	
+	// if(isset($_SESSION['connect'])){
+	// 	header('location: index.php');
+	// 	exit();
+	// }
+
 	if(!empty($_POST['email']) && !empty($_POST['password'])){
 
 		//connexion à la base de données*

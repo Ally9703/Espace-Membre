@@ -4,6 +4,7 @@
 
 	// require_once('src/index.php');
 
+	//Permettre de cacher sertaines partie du site si on est pas connecter
 	if(isset($_SESSION['connect'])) {
 
 		header('location: index.php');
