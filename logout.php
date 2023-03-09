@@ -1,14 +1,10 @@
 <?php
-    // initialiser les session
+    session_start(); // Initialiser
+    session_unset(); // Désactiver
+    session_destroy(); // Détruir
 
-    session_start();
+    setcookie('auth', '', time() - 1);
 
-    // desactivation de la session
-    session_unset();
-
-    // Desctruction de la session
-    session_destroy();
-
-    header('location: index.php?');
+    header('location: index.php');
     exit();
 ?>

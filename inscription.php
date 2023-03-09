@@ -2,9 +2,8 @@
 
 	session_start();
 
-	// require_once('src/index.php');
+	require_once('src/option.php');
 
-	//Permettre de cacher sertaines partie du site si on est pas connecter
 	if(isset($_SESSION['connect'])) {
 
 		header('location: index.php');
@@ -77,7 +76,7 @@
 	<meta charset="utf-8">
 	<title>Netflix</title>
 	<link rel="stylesheet" type="text/css" href="design/default.css">
-	<link rel="icon" type="assets/png" href="assets/favicon.png">
+	<link rel="icon" type="image/png" href="assets/favicon.png">
 </head>
 <body>
 
@@ -87,14 +86,13 @@
 		<div id="login-body">
 			<h1>S'inscrire</h1>
 
-			
 			<?php if(isset($_GET['error']) && isset($_GET['message'])) {
 
-			echo '<div class="alert error">'.htmlspecialchars($_GET['message']).'</div>';
+				echo '<div class="alert error">'.htmlspecialchars($_GET['message']).'</div>';
 
 			} else if(isset($_GET['success'])) {
 
-			echo '<div class="alert success">Vous êtes désormais inscrit. <a href="index.php">Connectez-vous</a>.</div>';
+				echo '<div class="alert success">Vous êtes désormais inscrit. <a href="index.php">Connectez-vous</a>.</div>';
 
 			} ?>
 

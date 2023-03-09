@@ -2,21 +2,16 @@
 
 	session_start();
 
-	
-	// if(isset($_SESSION['connect'])){
-	// 	header('location: index.php');
-	// 	exit();
-	// }
+	require_once('src/option.php');
 
-	if(!empty($_POST['email']) && !empty($_POST['password'])){
+	if(!empty($_POST['email']) && !empty($_POST['password'])) {
 
-		//connexion à la base de données*
-		require_once ('src/connection.php');
+		// Connexion à la bdd
+		require_once('src/connection.php');
 
-		// Varibles 
-		$email      = htmlspecialchars($_POST['email']);
-		$password   = htmlspecialchars($_POST['password']);
-		
+		// Variables
+		$email			= htmlspecialchars($_POST['email']);
+		$password		= htmlspecialchars($_POST['password']);
 
 		// L'adresse email est-elle correcte ?
 		if(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -39,32 +34,44 @@
 
 				header('location: index.php?error=1&message=Impossible de vous authentifier correctement.');
 				exit();
+
 			}
+
 		}
 
-		// connexion 
+		// Connexion
 		$req = $bdd->prepare('SELECT * FROM user WHERE email = ?');
 		$req->execute([$email]);
 
-		while($user = $req->fetch()){
-			if($password == $user['password']){
+		while($user = $req->fetch()) {
+
+			if($password == $user['password']) {
 
 				$_SESSION['connect'] = 1;
-				$_SESSION['email']   = $user['email'];
-				
-				header('location: index.php?success=1');
+				$_SESSION['email']	 = $user['email'];
 
-			}else{
+				if(isset($_POST['auto'])) {
+
+					setcookie('auth', $user['secret'], time() + 365*24*3600, '/', null, false, true);
+
+				}
+
+				header('location: index.php?success=1');
+				exit();
+
+			}
+			else {
+
 				header('location: index.php?error=1&message=Impossible de vous authentifier correctement.');
 				exit();
+
 			}
+
 		}
 
 	}
 
-
 ?>
-
 
 <!DOCTYPE html>
 <html>
@@ -72,7 +79,7 @@
 	<meta charset="utf-8">
 	<title>Netflix</title>
 	<link rel="stylesheet" type="text/css" href="design/default.css">
-	<link rel="icon" type="assets/png" href="assets/favicon.png">
+	<link rel="icon" type="image/png" href="assets/favicon.png">
 </head>
 <body>
 
